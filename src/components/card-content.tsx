@@ -1,4 +1,4 @@
-import { Box, Text } from '@chakra-ui/react';
+import { Box, Text, useColorMode } from '@chakra-ui/react';
 import { RiUserFill, RiTeamFill } from 'react-icons/ri';
 import { PURPLE, TEXT_GRAY } from '../constants';
 import { UsageRadioOptionsType } from '../types/component-types';
@@ -9,6 +9,7 @@ const CardContent = (props: {
   isMobile: boolean;
 }) => {
   const { value, isChecked, isMobile } = props;
+  const { colorMode } = useColorMode();
   switch (value) {
     case 'individual':
       return (
@@ -20,7 +21,9 @@ const CardContent = (props: {
           >
             <RiUserFill
               size={isMobile ? '2em' : '1.5em'}
-              color={isChecked ? PURPLE : 'black'}
+              color={
+                isChecked ? PURPLE : colorMode === 'dark' ? 'white' : 'black'
+              }
             />
           </Box>
 
@@ -42,7 +45,9 @@ const CardContent = (props: {
           >
             <RiTeamFill
               size={isMobile ? '2em' : '1.5em'}
-              color={isChecked ? PURPLE : 'black'}
+              color={
+                isChecked ? PURPLE : colorMode === 'dark' ? 'white' : 'black'
+              }
             />
           </Box>
           <Text mt={4} fontWeight="bold">

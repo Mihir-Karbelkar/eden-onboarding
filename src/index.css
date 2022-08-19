@@ -10,3 +10,7 @@ body {
   display: inline-block;
   vertical-align: middle;
 }
+#root {
+  height: 100vh;
+  position: relative;
+}

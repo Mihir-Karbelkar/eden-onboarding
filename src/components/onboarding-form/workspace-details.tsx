@@ -7,6 +7,7 @@ import {
   InputGroup,
   InputLeftAddon,
   Text,
+  useColorMode,
 } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
@@ -32,6 +33,7 @@ const WorkspaceDetails = () => {
     );
     nextStep();
   });
+  const { colorMode } = useColorMode();
   return (
     <Box
       justifyContent="center"
@@ -66,8 +68,8 @@ const WorkspaceDetails = () => {
             </Text>
             <InputGroup>
               <InputLeftAddon
-                backgroundColor={'#F4F6F9'}
-                color={TEXT_GRAY}
+                backgroundColor={colorMode === 'light' ? '#F4F6F9' : 'auto'}
+                color={colorMode === 'light' ? TEXT_GRAY : 'auto'}
                 children="www.eden.com/"
               />
               <Input placeholder="Example" {...register('workspaceUrl')} />

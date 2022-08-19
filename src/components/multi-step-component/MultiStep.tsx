@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/react';
+import { Box, useColorMode } from '@chakra-ui/react';
 import React, { Fragment, useEffect, useState } from 'react';
 import {
   MultiStepPropType,
@@ -80,6 +80,7 @@ const MultiStepPagination = (props: MultiStepPaginationProps) => {
   const { currentStep, stepCount, arrowWidth = 40, boxWidth = 40 } = props;
   const { jumptToStep } = useMultiStep();
   const [isMobile] = useMediaQuery('(max-width: 600px)');
+  const { colorMode } = useColorMode();
 
   useEffect(() => {
     const elementToCenter = document.getElementById(`page-${currentStep}`);
@@ -155,14 +156,22 @@ const MultiStepPagination = (props: MultiStepPaginationProps) => {
                   height={`${boxWidth}px`}
                   borderRadius={'50%'}
                   border={`1px solid ${
-                    step <= currentStep ? PURPLE : LIGHT_GRAY
+                    step <= currentStep
+                      ? PURPLE
+                      : colorMode === 'dark'
+                      ? 'white'
+                      : LIGHT_GRAY
                   }`}
                   display="flex"
                   position={'relative'}
                   justifyContent={'center'}
                   alignItems="center"
                   backgroundColor={step <= currentStep ? PURPLE : 'auto'}
-                  textColor={step <= currentStep ? 'white' : 'black'}
+                  textColor={
+                    step <= currentStep || colorMode === 'dark'
+                      ? 'white'
+                      : 'black'
+                  }
                   _before={leftArrow}
                   _after={rightArrow}
                   onClick={() => {
