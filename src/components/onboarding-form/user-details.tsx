@@ -21,10 +21,6 @@ const UserDetails = () => {
   } = useForm<UserDetailsFormType>();
   const dispatch = useDispatch();
   const onSubmit = handleSubmit((data) => {
-    console.log({
-      fullName: data.fullName,
-      displayName: data.displayName,
-    });
     dispatch(
       addUserDetails({
         fullName: data.fullName,
