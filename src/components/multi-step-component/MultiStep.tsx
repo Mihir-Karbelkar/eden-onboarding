@@ -31,13 +31,13 @@ const MultiStep: React.FC<React.PropsWithChildren<MultiStepPropType>> = (
     const tempPagesVisited = [...pagesAllowed];
     tempPagesVisited[startIndex] = true;
     setPagesAllowed(tempPagesVisited);
-  }, [startIndex]);
+  }, [startIndex]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const tempPagesVisited = [...pagesAllowed];
     tempPagesVisited[currentStep] = true;
     setPagesAllowed(tempPagesVisited);
-  }, [currentStep]);
+  }, [currentStep]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const nextStep = () => {
     if (currentStep < stepCount - 1) {
