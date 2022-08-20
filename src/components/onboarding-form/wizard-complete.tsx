@@ -7,7 +7,6 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { MdCheck } from 'react-icons/md';
-import useMultiStep from '../multi-step-component/useMultiStep';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { PURPLE, TEXT_GRAY } from '../../constants';
@@ -18,6 +17,7 @@ const WizardComplete = () => {
     (state) => state.wizardForm
   );
   const toast = useToast();
+  const id = 'payload-toast';
   return (
     <Box
       justifyContent="center"
@@ -48,36 +48,40 @@ const WizardComplete = () => {
         mt={8}
         width={'100%'}
         onClick={() => {
-          toast({
-            position: isMobile ? 'bottom' : 'bottom-left',
-            status: 'info',
-            render: () => {
-              return (
-                <Box
-                  backgroundColor={PURPLE}
-                  display="flex"
-                  flexDirection={'column'}
-                  alignItems="center"
-                  paddingTop={4}
-                  paddingBottom={4}
-                  borderRadius="10px"
-                >
-                  <Text color="white" fontWeight={'bold'}>
-                    Form Data Across Pages
-                  </Text>
-                  <Code
-                    as="pre"
+          if (!toast.isActive(id)) {
+            toast({
+              id,
+              position: 'bottom',
+
+              status: 'info',
+              render: () => {
+                return (
+                  <Box
+                    backgroundColor={PURPLE}
+                    display="flex"
+                    flexDirection={'column'}
+                    alignItems="center"
+                    paddingTop={4}
+                    paddingBottom={4}
                     borderRadius="10px"
-                    mt={2}
-                    backgroundColor="#edf2f7"
-                    p={2}
-                    color="black"
-                    children={JSON.stringify(formState, null, 2)}
-                  />
-                </Box>
-              );
-            },
-          });
+                  >
+                    <Text color="white" fontWeight={'bold'}>
+                      Form Data Across Pages
+                    </Text>
+                    <Code
+                      as="pre"
+                      borderRadius="10px"
+                      mt={2}
+                      backgroundColor="#edf2f7"
+                      p={2}
+                      color="black"
+                      children={JSON.stringify(formState, null, 2)}
+                    />
+                  </Box>
+                );
+              },
+            });
+          }
         }}
       >
         Launch Eden

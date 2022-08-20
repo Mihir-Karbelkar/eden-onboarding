@@ -8,7 +8,6 @@ import {
 import { useDispatch } from 'react-redux';
 import { PURPLE, TEXT_GRAY, USAGE_CARD_CONTENT } from '../../constants';
 import { addUsageDetails } from '../../redux/slices/wizard-form.slice';
-import { UsageRadioOptionsType } from '../../types/component-types';
 import CardContent from '../card-content';
 import useMultiStep from '../multi-step-component/useMultiStep';
 import UsageRadioCard from '../usage-radio-card';
