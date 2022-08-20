@@ -5,6 +5,10 @@ Onboarding form which uses chakra ui and redux to store the form values and subm
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Steps to install
+
+### `yarn install`
+
 ## Available Scripts
 
 In the project directory, you can run:
