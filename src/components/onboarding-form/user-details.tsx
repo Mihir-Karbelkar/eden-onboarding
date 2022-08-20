@@ -42,7 +42,7 @@ const UserDetails = () => {
       <Text fontSize={'large'} color={TEXT_GRAY} mt={2}>
         You can always change them later.
       </Text>
-      <Box className="form1" mt="50px" width={{ md: '80%', sm: '100%' }}>
+      <Box className="form1" mt="50px" width={'100%'}>
         <form onSubmit={onSubmit}>
           <FormControl isInvalid={Boolean(errors?.fullName)}>
             <Text fontWeight={'medium'}>Full Name</Text>
