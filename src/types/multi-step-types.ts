@@ -4,6 +4,8 @@ export type MultiStepValuesType = {
   stepCount: number;
   previousStep: () => void;
   nextStep: () => void;
+  allowPage: (index: number) => void;
+  pagesAllowed: boolean[];
 };
 
 export type MultiStepPropType = {
@@ -11,4 +13,5 @@ export type MultiStepPropType = {
   paginationStyles?: React.CSSProperties;
   paginationBoxWidth?: number;
   paginationArrowWidth?: number;
+  allowAllPages?: boolean;
 };

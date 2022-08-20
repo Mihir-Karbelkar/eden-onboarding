@@ -43,6 +43,7 @@ function App() {
           paginationStyles={{ marginBottom: isMobile ? '5vh' : '10vh' }}
           paginationBoxWidth={isMobile ? 60 : 40}
           paginationArrowWidth={isMobile ? 20 : 40}
+          allowAllPages={false}
         >
           <UserDetails />
           <WorkspaceDetails />

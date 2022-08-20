@@ -18,27 +18,52 @@ const MultiStep: React.FC<React.PropsWithChildren<MultiStepPropType>> = (
     paginationStyles,
     paginationBoxWidth = 40,
     paginationArrowWidth = 40,
+    allowAllPages = true,
   } = props;
   const [currentStep, setCurrentStep] = useState<number>(startIndex);
   const componentChildren = React.Children.toArray(children);
   const stepCount = componentChildren.length;
+  const [pagesAllowed, setPagesAllowed] = useState<boolean[]>(
+    Array.from({ length: stepCount }, () => allowAllPages)
+  );
+
+  useEffect(() => {
+    const tempPagesVisited = [...pagesAllowed];
+    tempPagesVisited[startIndex] = true;
+    setPagesAllowed(tempPagesVisited);
+  }, [startIndex]);
+
+  useEffect(() => {
+    const tempPagesVisited = [...pagesAllowed];
+    tempPagesVisited[currentStep] = true;
+    setPagesAllowed(tempPagesVisited);
+  }, [currentStep]);
 
   const nextStep = () => {
     if (currentStep < stepCount - 1) {
+      allowPage(currentStep + 1);
       setCurrentStep(currentStep + 1);
     }
   };
 
   const previousStep = () => {
     if (currentStep > 0) {
+      allowPage(currentStep - 1);
       setCurrentStep(currentStep - 1);
     }
   };
 
   const jumptToStep = (index: number) => {
-    if (index >= 0 && index < stepCount) {
-      setCurrentStep(index);
-    }
+    if (pagesAllowed?.[index])
+      if (index >= 0 && index < stepCount) {
+        setCurrentStep(index);
+      }
+  };
+
+  const allowPage = (index: number) => {
+    const tempPagesVisited = [...pagesAllowed];
+    tempPagesVisited[index] = true;
+    setPagesAllowed(tempPagesVisited);
   };
 
   const multiStepValue: MultiStepValuesType = {
@@ -47,6 +72,8 @@ const MultiStep: React.FC<React.PropsWithChildren<MultiStepPropType>> = (
     currentStep,
     jumptToStep,
     stepCount,
+    allowPage,
+    pagesAllowed,
   };
 
   return (
@@ -78,7 +105,7 @@ type MultiStepPaginationProps = {
 
 const MultiStepPagination = (props: MultiStepPaginationProps) => {
   const { currentStep, stepCount, arrowWidth = 40, boxWidth = 40 } = props;
-  const { jumptToStep } = useMultiStep();
+  const { jumptToStep, pagesAllowed } = useMultiStep();
   const [isMobile] = useMediaQuery('(max-width: 600px)');
   const { colorMode } = useColorMode();
 
@@ -186,7 +213,7 @@ const MultiStepPagination = (props: MultiStepPaginationProps) => {
                 onClick={() => {
                   jumptToStep(step);
                 }}
-                cursor="pointer"
+                cursor={pagesAllowed?.[step] ? 'pointer' : 'not-allowed'}
               >
                 {step + 1}
               </Box>
