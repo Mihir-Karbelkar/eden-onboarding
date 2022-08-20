@@ -1,5 +1,5 @@
 import { Box, useColorMode } from '@chakra-ui/react';
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   MultiStepPropType,
   MultiStepValuesType,
@@ -84,11 +84,18 @@ const MultiStepPagination = (props: MultiStepPaginationProps) => {
 
   useEffect(() => {
     const elementToCenter = document.getElementById(`page-${currentStep}`);
-    elementToCenter?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'center',
-      inline: 'center',
-    });
+    const timeout = setTimeout(
+      () =>
+        elementToCenter?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+          inline: 'center',
+        }),
+      100
+    );
+    return () => {
+      clearTimeout(timeout);
+    };
   }, [currentStep]);
 
   return (
@@ -103,6 +110,7 @@ const MultiStepPagination = (props: MultiStepPaginationProps) => {
         paddingRight={
           isMobile ? `calc(${2 * arrowWidth + boxWidth}px + 1rem)` : 0
         }
+        scrollSnapType={'x mandatory'}
       >
         {Array.from({ length: stepCount }, (_, index) => index).map((step) => {
           const leftArrow =
@@ -141,48 +149,48 @@ const MultiStepPagination = (props: MultiStepPaginationProps) => {
               : {};
 
           return (
-            <Fragment key={`step-${step}`}>
+            <Box
+              ml={`${arrowWidth}px`}
+              mr={`${arrowWidth}px`}
+              id={`page-${step}`}
+              outline={'none'}
+              _focusVisible={{
+                outline: 'none',
+              }}
+              key={`step-${step}`}
+              scrollSnapAlign={'center'}
+            >
               <Box
-                ml={`${arrowWidth}px`}
-                mr={`${arrowWidth}px`}
-                id={`page-${step}`}
-                outline={'none'}
-                _focusVisible={{
-                  outline: 'none',
+                width={`${boxWidth}px`}
+                height={`${boxWidth}px`}
+                borderRadius={'50%'}
+                border={`1px solid ${
+                  step <= currentStep
+                    ? PURPLE
+                    : colorMode === 'dark'
+                    ? 'white'
+                    : LIGHT_GRAY
+                }`}
+                display="flex"
+                position={'relative'}
+                justifyContent={'center'}
+                alignItems="center"
+                backgroundColor={step <= currentStep ? PURPLE : 'auto'}
+                textColor={
+                  step <= currentStep || colorMode === 'dark'
+                    ? 'white'
+                    : 'black'
+                }
+                _before={leftArrow}
+                _after={rightArrow}
+                onClick={() => {
+                  jumptToStep(step);
                 }}
+                cursor="pointer"
               >
-                <Box
-                  width={`${boxWidth}px`}
-                  height={`${boxWidth}px`}
-                  borderRadius={'50%'}
-                  border={`1px solid ${
-                    step <= currentStep
-                      ? PURPLE
-                      : colorMode === 'dark'
-                      ? 'white'
-                      : LIGHT_GRAY
-                  }`}
-                  display="flex"
-                  position={'relative'}
-                  justifyContent={'center'}
-                  alignItems="center"
-                  backgroundColor={step <= currentStep ? PURPLE : 'auto'}
-                  textColor={
-                    step <= currentStep || colorMode === 'dark'
-                      ? 'white'
-                      : 'black'
-                  }
-                  _before={leftArrow}
-                  _after={rightArrow}
-                  onClick={() => {
-                    jumptToStep(step);
-                  }}
-                  cursor="pointer"
-                >
-                  {step + 1}
-                </Box>
+                {step + 1}
               </Box>
-            </Fragment>
+            </Box>
           );
         })}
       </Box>

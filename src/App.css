@@ -27,3 +27,6 @@
     background-color: transparent;
   }
 }
+.stepper-scrollbar {
+  scroll-snap-type: x mandatory;
+}
