@@ -2,7 +2,6 @@
   "name": "onboarding",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://mihir-karbelkar.github.io/eden-onboarding",
   "dependencies": {
     "@chakra-ui/icons": "^2.0.8",
     "@chakra-ui/react": "^2.2.8",
