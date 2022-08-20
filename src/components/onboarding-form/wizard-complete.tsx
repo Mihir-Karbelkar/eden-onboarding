@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  Code,
-  Text,
-  useMediaQuery,
-  useToast,
-} from '@chakra-ui/react';
+import { Box, Button, Text, useMediaQuery, useToast } from '@chakra-ui/react';
 import { MdCheck } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
