@@ -57,30 +57,18 @@ const WizardComplete = () => {
               render: () => {
                 return (
                   <Box
+                    p={2}
                     backgroundColor={PURPLE}
-                    display="flex"
-                    flexDirection={'column'}
-                    alignItems="center"
-                    paddingTop={4}
-                    paddingBottom={4}
-                    borderRadius="10px"
+                    color="white"
+                    borderRadius={'10px'}
+                    textAlign={'center'}
                   >
-                    <Text color="white" fontWeight={'bold'}>
-                      Form Data Across Pages
-                    </Text>
-                    <Code
-                      as="pre"
-                      borderRadius="10px"
-                      mt={2}
-                      backgroundColor="#edf2f7"
-                      p={2}
-                      color="black"
-                      children={JSON.stringify(formState, null, 2)}
-                    />
+                    Check console log for payload.
                   </Box>
                 );
               },
             });
+            console.log('Payload: ', JSON.stringify(formState, null, 2));
           }
         }}
       >
