@@ -5,9 +5,11 @@ import {
   useMediaQuery,
   useRadioGroup,
 } from '@chakra-ui/react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { PURPLE, TEXT_GRAY, USAGE_CARD_CONTENT } from '../../constants';
 import { addUsageDetails } from '../../redux/slices/wizard-form.slice';
+import { RootState } from '../../redux/store';
+import { WizardFormType } from '../../types/wizard-form-types';
 import CardContent from '../card-content';
 import useMultiStep from '../multi-step-component/useMultiStep';
 import UsageRadioCard from '../usage-radio-card';
@@ -15,9 +17,12 @@ import UsageRadioCard from '../usage-radio-card';
 const UsageDetails = () => {
   const { nextStep } = useMultiStep();
   const dispatch = useDispatch();
+  const workspaceFor = useSelector<RootState, WizardFormType['workspaceFor']>(
+    (state) => state.wizardForm.workspaceFor
+  );
   const { getRadioProps, getRootProps } = useRadioGroup({
     name: 'useage-radio',
-    defaultValue: 'individual',
+    defaultValue: workspaceFor || 'individual',
     onChange: (workspaceFor) => dispatch(addUsageDetails({ workspaceFor })),
   });
   const group = getRootProps();

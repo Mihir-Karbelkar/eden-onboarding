@@ -7,13 +7,20 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { PURPLE, TEXT_GRAY } from '../../constants';
 import { addUserDetails } from '../../redux/slices/wizard-form.slice';
-import { UserDetailsFormType } from '../../types/wizard-form-types';
+import { RootState } from '../../redux/store';
+import {
+  UserDetailsFormType,
+  WizardFormType,
+} from '../../types/wizard-form-types';
 import useMultiStep from '../multi-step-component/useMultiStep';
 const UserDetails = () => {
   const { nextStep } = useMultiStep();
+  const formState = useSelector<RootState, WizardFormType>(
+    (state) => state.wizardForm
+  );
   const {
     register,
     handleSubmit,
@@ -49,6 +56,7 @@ const UserDetails = () => {
             <Input
               placeholder="Steve Jobs"
               mt={2}
+              defaultValue={formState?.fullName}
               {...register('fullName', { required: 'Full name is required.' })}
             />
             <FormErrorMessage>{errors?.fullName?.message}</FormErrorMessage>
@@ -60,6 +68,7 @@ const UserDetails = () => {
             <Input
               placeholder="Steve"
               mt={2}
+              defaultValue={formState?.displayName}
               {...register('displayName', {
                 required: 'Display name is required.',
               })}

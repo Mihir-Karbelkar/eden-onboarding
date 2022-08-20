@@ -10,10 +10,14 @@ import {
   useColorMode,
 } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { PURPLE, TEXT_GRAY } from '../../constants';
 import { addWorkspaceDetails } from '../../redux/slices/wizard-form.slice';
-import { WorkspaceDetailsFormType } from '../../types/wizard-form-types';
+import { RootState } from '../../redux/store';
+import {
+  WizardFormType,
+  WorkspaceDetailsFormType,
+} from '../../types/wizard-form-types';
 import useMultiStep from '../multi-step-component/useMultiStep';
 const WorkspaceDetails = () => {
   const { nextStep } = useMultiStep();
@@ -23,7 +27,9 @@ const WorkspaceDetails = () => {
     formState: { errors, isSubmitting },
   } = useForm<WorkspaceDetailsFormType>();
   const dispatch = useDispatch();
-
+  const formState = useSelector<RootState, WizardFormType>(
+    (state) => state.wizardForm
+  );
   const onSubmit = handleSubmit((data) => {
     dispatch(
       addWorkspaceDetails({
@@ -54,6 +60,7 @@ const WorkspaceDetails = () => {
             <Input
               placeholder="Eden"
               mt={2}
+              defaultValue={formState?.workspaceName}
               {...register('workspaceName', {
                 required: 'Workspace name is required.',
               })}
@@ -75,7 +82,11 @@ const WorkspaceDetails = () => {
                 color={colorMode === 'light' ? TEXT_GRAY : 'auto'}
                 children="www.eden.com/"
               />
-              <Input placeholder="Example" {...register('workspaceUrl')} />
+              <Input
+                placeholder="Example"
+                defaultValue={formState?.workspaceUrl}
+                {...register('workspaceUrl')}
+              />
             </InputGroup>
           </FormControl>
           <Button
