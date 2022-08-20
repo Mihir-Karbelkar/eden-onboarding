@@ -141,7 +141,7 @@ const MultiStepPagination = (props: MultiStepPaginationProps) => {
               : {};
 
           return (
-            <Fragment>
+            <Fragment key={`step-${step}`}>
               <Box
                 ml={`${arrowWidth}px`}
                 mr={`${arrowWidth}px`}

@@ -6,7 +6,7 @@ import {
   useRadioGroup,
 } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
-import { PURPLE, TEXT_GRAY } from '../../constants';
+import { PURPLE, TEXT_GRAY, USAGE_CARD_CONTENT } from '../../constants';
 import { addUsageDetails } from '../../redux/slices/wizard-form.slice';
 import { UsageRadioOptionsType } from '../../types/component-types';
 import CardContent from '../card-content';
@@ -22,7 +22,6 @@ const UsageDetails = () => {
     onChange: (workspaceFor) => dispatch(addUsageDetails({ workspaceFor })),
   });
   const group = getRootProps();
-  const radioOptions = ['individual', 'team'];
   const [isMobile] = useMediaQuery('(max-width: 600px)');
 
   return (
@@ -47,22 +46,30 @@ const UsageDetails = () => {
         alignItems="center"
       >
         <Box width={{ md: '80%', sm: '100%' }}>
-          <Box display={'flex'} {...group}>
-            {radioOptions.map((value, index) => {
+          <Box
+            display={'flex'}
+            flexWrap={'wrap'}
+            marginLeft={'-15px'}
+            {...group}
+          >
+            {Object.entries(USAGE_CARD_CONTENT).map(([value, data]) => {
               const radio = getRadioProps({ value });
 
               return (
                 <UsageRadioCard
                   cardCSS={{
-                    flex: 1,
-                    marginLeft: index !== 0 ? '20px' : undefined,
+                    flex: '1 1',
+                    marginLeft: '15px',
+                    marginBottom: '20px',
                   }}
                   key={value}
                   {...radio}
                 >
                   <Box padding={5}>
                     <CardContent
-                      value={value as UsageRadioOptionsType}
+                      title={data.title}
+                      CardIcon={data.CardIcon}
+                      description={data.description}
                       isChecked={radio.isChecked}
                       isMobile={isMobile}
                     />
@@ -74,7 +81,7 @@ const UsageDetails = () => {
           <Button
             color={'white'}
             backgroundColor={PURPLE}
-            mt={5}
+            mt={2}
             onClick={nextStep}
             width="100%"
           >

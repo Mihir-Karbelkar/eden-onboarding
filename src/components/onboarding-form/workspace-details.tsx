@@ -64,7 +64,10 @@ const WorkspaceDetails = () => {
           </FormControl>
           <FormControl>
             <Text fontWeight={'medium'} mt={4} display="flex">
-              Workspace URL <Text color={TEXT_GRAY}>(Optional)</Text>
+              Workspace URL{' '}
+              <Text as="span" color={TEXT_GRAY}>
+                (Optional)
+              </Text>
             </Text>
             <InputGroup>
               <InputLeftAddon

@@ -21,6 +21,7 @@ const UsageRadioCard = (
         _checked={{
           borderColor: PURPLE,
         }}
+        height="100%"
       >
         {props.children}
       </Box>

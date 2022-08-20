@@ -1,5 +1,5 @@
 export type MultiStepValuesType = {
-  jumptToStep: (index: number) => void;
+  jumptToStep: (index: number, canMove?: () => boolean) => void;
   currentStep: number;
   stepCount: number;
   previousStep: () => void;

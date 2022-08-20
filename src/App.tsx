@@ -50,8 +50,12 @@ function App() {
           <WizardComplete />
         </MultiStep>
       </Container>
-      <Box position={'absolute'} right={'5%'} bottom={'5%'}>
-        <Button onClick={toggleColorMode}>
+      <Box
+        position={'absolute'}
+        right={isMobile ? '10px' : '5%'}
+        top={isMobile ? '10px' : '5%'}
+      >
+        <Button onClick={toggleColorMode} size={isMobile ? 'sm' : 'md'}>
           {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
         </Button>
       </Box>
